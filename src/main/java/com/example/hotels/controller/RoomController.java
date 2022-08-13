@@ -1,10 +1,8 @@
-package com.example.hotels.Controller;
+package com.example.hotels.controller;
 
-import com.example.hotels.DTO.RoomDTO;
-import com.example.hotels.DTO.RoomDeleteRequestDTO;
-import com.example.hotels.DTO.RoomSaveRequestDTO;
-import com.example.hotels.Entity.Room;
-import com.example.hotels.Service.RoomService;
+import com.example.hotels.dto.RoomDTO;
+import com.example.hotels.dto.RoomSaveRequestDTO;
+import com.example.hotels.service.RoomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,12 +25,6 @@ public class RoomController {
     public ResponseEntity<RoomDTO> save(@RequestBody RoomSaveRequestDTO dto){
         RoomDTO roomDTO = roomService.save(dto);
         return new ResponseEntity<>(roomDTO, HttpStatus.OK);
-    }
-
-    @PostMapping("/delete")
-    public ResponseEntity<RoomDTO> delete(@RequestBody RoomDeleteRequestDTO dto){
-        roomService.delete(dto);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }

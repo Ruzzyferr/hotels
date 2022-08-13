@@ -1,12 +1,10 @@
-package com.example.hotels.Service;
+package com.example.hotels.service;
 
-import com.example.hotels.DTO.UserDTO;
-import com.example.hotels.DTO.UserSaveRequestDTO;
-import com.example.hotels.Entity.User;
-import com.example.hotels.Mappers.UserMapper;
+import com.example.hotels.dto.UserDTO;
+import com.example.hotels.dto.UserSaveRequestDTO;
+import com.example.hotels.entity.User;
+import com.example.hotels.mapper.UserMapper;
 import com.example.hotels.repository.UserRepository;
-import com.sun.xml.bind.v2.runtime.output.Encoded;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 @Service

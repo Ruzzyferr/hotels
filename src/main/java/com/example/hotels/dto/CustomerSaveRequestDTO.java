@@ -1,15 +1,11 @@
-package com.example.hotels.Entity;
+package com.example.hotels.dto;
+
 import lombok.Data;
 
-import javax.persistence.*;
 
 @Data
-@Entity
-@Table(name = "customers")
-public class Customer {
+public class CustomerSaveRequestDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
@@ -19,6 +15,8 @@ public class Customer {
     private String tc;
 
     private String passportNo;
+
+    private String email;
 
     private Boolean active;
 

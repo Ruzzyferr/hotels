@@ -1,18 +1,17 @@
-package com.example.hotels.DTO;
+package com.example.hotels.dto;
 
-import com.example.hotels.Enum.Role;
+import com.example.hotels.enums.Role;
 import lombok.Data;
 
+
 @Data
-public class UserSaveRequestDTO {
+public class UserDTO {
 
     private int id;
 
     private String name;
 
     private String username;
-
-    private String password;
 
     private Role role;
 

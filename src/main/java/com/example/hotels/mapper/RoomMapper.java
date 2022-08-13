@@ -1,9 +1,8 @@
-package com.example.hotels.Mappers;
+package com.example.hotels.mapper;
 
-import com.example.hotels.DTO.RoomDTO;
-import com.example.hotels.DTO.RoomDeleteRequestDTO;
-import com.example.hotels.DTO.RoomSaveRequestDTO;
-import com.example.hotels.Entity.Room;
+import com.example.hotels.dto.RoomDTO;
+import com.example.hotels.dto.RoomSaveRequestDTO;
+import com.example.hotels.entity.Room;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
@@ -18,8 +17,6 @@ public interface RoomMapper {
     Room toEntity (RoomDTO dto);
 
     Room toRoomFromSaveRequestDto (RoomSaveRequestDTO dto);
-
-    Room toRoomFromDeleteRequestDto (RoomDeleteRequestDTO dto);
 
     @IterableMapping(qualifiedByName = "toDto")
     List<RoomDTO> toDtoList (List<Room> entityList);

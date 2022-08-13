@@ -1,4 +1,4 @@
-package com.example.hotels.DTO;
+package com.example.hotels.dto;
 
 import lombok.Data;
 
@@ -14,6 +14,8 @@ public class CustomerDTO {
     private String tc;
 
     private String passportNo;
+
+    private String email;
 
     private Boolean active;
 

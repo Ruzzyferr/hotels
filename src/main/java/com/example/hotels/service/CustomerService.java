@@ -1,15 +1,14 @@
-package com.example.hotels.Service;
+package com.example.hotels.service;
 
-import com.example.hotels.DTO.CustomerDTO;
-import com.example.hotels.DTO.CustomerDeleteRequestDTO;
-import com.example.hotels.DTO.CustomerSaveRequestDTO;
-import com.example.hotels.Entity.Customer;
-import com.example.hotels.Mappers.CustomerMapper;
+import com.example.hotels.dto.CustomerDTO;
+import com.example.hotels.dto.CustomerSaveRequestDTO;
+import com.example.hotels.entity.Customer;
+import com.example.hotels.mapper.CustomerMapper;
 import com.example.hotels.repository.CustomerRepository;
 import com.example.hotels.util.Encryptor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 
 @Service
@@ -26,7 +25,6 @@ public class CustomerService {
     }
 
 
-
     public CustomerDTO save(CustomerSaveRequestDTO dto){
        Customer customer = customerMapper.toCustomerFromSaveRequestDto(dto);
         customer.setTc(encryptor.generateSecurePassword(customer.getTc()));
@@ -41,10 +39,15 @@ public class CustomerService {
        return dto2;
     }
 
-    public CustomerDTO delete(CustomerDeleteRequestDTO dto){
-        Customer customer = customerMapper.toCustomerFromDeleteRequestDto(dto);
-        customer = customerRepository.save(customer);
-        return customerMapper.toDto(customer);
+    public boolean delete(int id){
+        Customer customer = customerRepository.findByIdAndActiveTrue(id).orElseThrow(() -> new RuntimeException("Active customer could not found with id: " + id));
+        customer.setActive(false);
+        customerRepository.save(customer);
+        return true;
+    }
+
+    public List<CustomerDTO> listAllCustomers() {
+        return customerMapper.toDtoList(customerRepository.findAllByActiveTrue());
     }
 
 }

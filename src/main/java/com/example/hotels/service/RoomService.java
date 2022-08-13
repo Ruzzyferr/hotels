@@ -1,10 +1,9 @@
-package com.example.hotels.Service;
+package com.example.hotels.service;
 
-import com.example.hotels.DTO.RoomDTO;
-import com.example.hotels.DTO.RoomDeleteRequestDTO;
-import com.example.hotels.DTO.RoomSaveRequestDTO;
-import com.example.hotels.Entity.Room;
-import com.example.hotels.Mappers.RoomMapper;
+import com.example.hotels.dto.RoomDTO;
+import com.example.hotels.dto.RoomSaveRequestDTO;
+import com.example.hotels.entity.Room;
+import com.example.hotels.mapper.RoomMapper;
 import com.example.hotels.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +23,6 @@ public class RoomService {
 
         room = roomRepository.save(room);
         return roomMapper.toDto(room);
-    }
-
-    public RoomDeleteRequestDTO delete(RoomDeleteRequestDTO dto){
-
-        Room room = roomMapper.toRoomFromDeleteRequestDto(dto);
-        dto.setActive(false);
-        roomRepository.delete(room);
-
-        return dto;
     }
 
 }

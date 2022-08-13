@@ -1,4 +1,4 @@
-package com.example.hotels.Enum;
+package com.example.hotels.enums;
 
 public enum Role {
 

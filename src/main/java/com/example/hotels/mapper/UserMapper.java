@@ -1,8 +1,8 @@
-package com.example.hotels.Mappers;
+package com.example.hotels.mapper;
 
-import com.example.hotels.DTO.UserDTO;
-import com.example.hotels.DTO.UserSaveRequestDTO;
-import com.example.hotels.Entity.User;
+import com.example.hotels.dto.UserDTO;
+import com.example.hotels.dto.UserSaveRequestDTO;
+import com.example.hotels.entity.User;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;

@@ -1,18 +1,18 @@
-package com.example.hotels.DTO;
+package com.example.hotels.dto;
 
-import com.example.hotels.Enum.RoomType;
+import com.example.hotels.enums.RoomType;
 import lombok.Data;
 
 @Data
-public class RoomSaveRequestDTO {
+public class RoomDTO {
 
     private int id;
+
+    private String name;
 
     private RoomType roomType;
 
     private int floor;
-
-    private int customer_id;
 
     private boolean active;
 

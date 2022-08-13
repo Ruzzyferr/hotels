@@ -1,6 +1,6 @@
-package com.example.hotels.Entity;
+package com.example.hotels.entity;
 
-import com.example.hotels.Enum.Role;
+import com.example.hotels.enums.Role;
 import lombok.Data;
 
 import javax.persistence.*;

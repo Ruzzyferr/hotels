@@ -1,15 +1,13 @@
-package com.example.hotels.Mappers;
+package com.example.hotels.mapper;
 
 
-import com.example.hotels.DTO.*;
-import com.example.hotels.Entity.Customer;
-import com.example.hotels.Entity.User;
+import com.example.hotels.dto.*;
+import com.example.hotels.entity.Customer;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 
 import java.util.List;
-import java.util.Optional;
 
 @Mapper(componentModel = "spring")
 public interface CustomerMapper {
@@ -20,8 +18,6 @@ public interface CustomerMapper {
     CustomerDTO toDto (Customer entity);
 
     Customer toCustomerFromSaveRequestDto (CustomerSaveRequestDTO dto);
-
-    Customer toCustomerFromDeleteRequestDto (CustomerDeleteRequestDTO dto);
 
     @IterableMapping(qualifiedByName = "toDto")
     List<CustomerDTO> toDtoList (List<Customer> entityList);

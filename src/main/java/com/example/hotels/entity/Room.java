@@ -1,6 +1,6 @@
-package com.example.hotels.Entity;
+package com.example.hotels.entity;
 
-import com.example.hotels.Enum.RoomType;
+import com.example.hotels.enums.RoomType;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,11 +14,12 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Enumerated(EnumType.STRING)
     private RoomType roomType;
 
-    private int floor;
+    private String name;
 
-    private int customer_id;
+    private int floor;
 
     private boolean active;
 
