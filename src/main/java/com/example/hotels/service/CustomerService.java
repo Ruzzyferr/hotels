@@ -40,7 +40,9 @@ public class CustomerService {
     }
 
     public boolean delete(int id){
-        Customer customer = customerRepository.findByIdAndActiveTrue(id).orElseThrow(() -> new RuntimeException("Active customer could not found with id: " + id));
+        Customer customer = customerRepository.findByIdAndActiveTrue(id).orElseThrow(
+                () -> new RuntimeException("Active customer could not found with id: " + id));
+
         customer.setActive(false);
         customerRepository.save(customer);
         return true;

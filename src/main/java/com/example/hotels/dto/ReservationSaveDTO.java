@@ -1,5 +1,6 @@
 package com.example.hotels.dto;
 
+import com.example.hotels.enums.ReservationStatus;
 import lombok.Data;
 
 import java.util.Date;
@@ -18,7 +19,11 @@ public class ReservationSaveDTO {
 
     private double totalPrice;
 
+    private ReservationStatus status;
+
     private String note;
+
+    private String cancelNote;
 
     private RoomDTO room;
 

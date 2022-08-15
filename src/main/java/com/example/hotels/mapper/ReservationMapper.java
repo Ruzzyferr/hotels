@@ -3,6 +3,7 @@ package com.example.hotels.mapper;
 
 import com.example.hotels.dto.ReservationDTO;
 import com.example.hotels.dto.ReservationSaveDTO;
+import com.example.hotels.dto.ReservationStatusDTO;
 import com.example.hotels.entity.Reservation;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
@@ -17,5 +18,7 @@ public interface ReservationMapper {
     ReservationDTO toDto (Reservation entity);
 
     Reservation toEntityFromSaveRequestDTO (ReservationSaveDTO dto);
+
+    Reservation toEntityFromStatusDTO (ReservationStatusDTO dto);
 
 }

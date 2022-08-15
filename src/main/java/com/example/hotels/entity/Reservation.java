@@ -1,5 +1,6 @@
 package com.example.hotels.entity;
 
+import com.example.hotels.enums.ReservationStatus;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,6 +23,11 @@ public class Reservation {
     private double price;
 
     private double totalPrice;
+
+    private String cancelNote;
+
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus status;
 
     @Column(length = 1000)
     private String note;
