@@ -5,8 +5,11 @@ import com.example.hotels.dto.ReservationDTO;
 import com.example.hotels.dto.ReservationSaveDTO;
 import com.example.hotels.dto.ReservationStatusDTO;
 import com.example.hotels.entity.Reservation;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ReservationMapper {
@@ -16,6 +19,9 @@ public interface ReservationMapper {
 
     @Named("toDto")
     ReservationDTO toDto (Reservation entity);
+
+    @IterableMapping(qualifiedByName = "toDto")
+    List<ReservationDTO> toDTOList (List<Reservation> entityList);
 
     Reservation toEntityFromSaveRequestDTO (ReservationSaveDTO dto);
 
