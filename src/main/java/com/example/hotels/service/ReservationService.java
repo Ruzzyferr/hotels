@@ -95,8 +95,6 @@ public class ReservationService {
     public List<ReservationDTO> filterReservations(ReservationFilterDTO dto) {
 
         Page<Reservation> page = reservationRepository.findAll((root, query, criteriaBuilder) ->  {
-            query.distinct(true);
-            query.orderBy(criteriaBuilder.asc(root.get("checkInDate")));
 
             List<Predicate> predicates = new ArrayList<>();
 
@@ -120,6 +118,8 @@ public class ReservationService {
 
             customerJoin = null;
 
+            query.distinct(true);
+            query.orderBy(criteriaBuilder.asc(root.get("checkInDate")));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         }, PageRequest.of(0, 10));
 
