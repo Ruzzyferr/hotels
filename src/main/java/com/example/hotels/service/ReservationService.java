@@ -3,12 +3,16 @@ package com.example.hotels.service;
 import com.example.hotels.dto.*;
 import com.example.hotels.entity.Customer;
 import com.example.hotels.entity.Reservation;
+import com.example.hotels.entity.Room;
 import com.example.hotels.enums.ErrorType;
 import com.example.hotels.enums.ReservationStatus;
 import com.example.hotels.exception.GenericServiceException;
 import com.example.hotels.mapper.ReservationMapper;
+import com.example.hotels.mapper.RoomMapper;
 import com.example.hotels.repository.CustomerRepository;
 import com.example.hotels.repository.ReservationRepository;
+import com.example.hotels.repository.RoomRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,10 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ReservationService {
@@ -28,6 +29,8 @@ public class ReservationService {
     private final ReservationMapper reservationMapper;
     private final ReservationRepository reservationRepository;
     private final CustomerRepository customerRepository;
+    private final RoomMapper roomMapper;
+    private final RoomRepository roomRepository;
 
     private Join<Reservation, Customer> customerJoin;
 
@@ -38,16 +41,23 @@ public class ReservationService {
         return customerJoin;
     }
 
-    public ReservationService(ReservationMapper reservationMapper, ReservationRepository reservationRepository, CustomerRepository customerRepository) {
+    public ReservationService(ReservationMapper reservationMapper, ReservationRepository reservationRepository, CustomerRepository customerRepository, RoomMapper roomMapper, RoomRepository roomRepository) {
         this.reservationMapper = reservationMapper;
         this.reservationRepository = reservationRepository;
         this.customerRepository = customerRepository;
 
+        this.roomMapper = roomMapper;
+        this.roomRepository = roomRepository;
     }
 
 
     @Transactional
-    public ReservationDTO save(ReservationSaveDTO dto) {
+    public ReservationDTO save(@NotNull ReservationSaveDTO dto) {
+        Reservation reservation1 = reservationRepository.findByRoom(dto.getRoom());
+
+        if(dto.getCheckInDate().after(reservation1.getCheckInDate()) && dto.getCheckOutDate().before(reservation1.getCheckOutDate())){
+            throw (new GenericServiceException(ErrorType.NO_ACTIVE_ROOM_IN_SELECTED_DATES,"check in date can be min " + reservation1.getCheckOutDate()));
+        }
 
         Reservation reservation = reservationMapper.toEntityFromSaveRequestDTO(dto);
 
@@ -69,6 +79,8 @@ public class ReservationService {
 
 
     }
+
+
 
     public ReservationDTO setStatus(ReservationStatusDTO dto) {
 
@@ -95,6 +107,8 @@ public class ReservationService {
     public List<ReservationDTO> filterReservations(ReservationFilterDTO dto) {
 
         Page<Reservation> page = reservationRepository.findAll((root, query, criteriaBuilder) ->  {
+            query.distinct(true);
+            query.orderBy(criteriaBuilder.asc(root.get("checkInDate")));
 
             List<Predicate> predicates = new ArrayList<>();
 
@@ -118,12 +132,13 @@ public class ReservationService {
 
             customerJoin = null;
 
-            query.distinct(true);
-            query.orderBy(criteriaBuilder.asc(root.get("checkInDate")));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         }, PageRequest.of(0, 10));
 
         return reservationMapper.toDTOList(page.getContent());
     }
+
+
+
 
 }

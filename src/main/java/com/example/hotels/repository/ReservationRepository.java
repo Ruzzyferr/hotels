@@ -1,5 +1,6 @@
 package com.example.hotels.repository;
 
+import com.example.hotels.dto.RoomDTO;
 import com.example.hotels.entity.Reservation;
 import com.sun.istack.Nullable;
 import org.springframework.data.domain.Page;
@@ -20,5 +21,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     Page<Reservation> findAll(@Nullable Specification productSpecification, Pageable pageable);
 
     List<Reservation> findAllByCheckInDateBetween(Date checkInDate, Date checkInDate2);
+
+   Reservation findByRoom(RoomDTO room);
 
 }
