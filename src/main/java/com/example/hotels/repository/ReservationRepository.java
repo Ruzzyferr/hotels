@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -23,5 +24,14 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     List<Reservation> findAllByCheckInDateBetween(Date checkInDate, Date checkInDate2);
 
    Reservation findByRoom(RoomDTO room);
+
+   @Query(nativeQuery = true,
+           value = "select * from reservations r\n" +
+           "where room_id = ?1\n" +
+           "  and (check_in_date between ?2 and ?3\n" +
+           "        or check_out_date between ?2 and ?3\n" +
+           "        or ?2 between check_in_date and check_out_date\n" +
+           "        or ?3 between check_in_date and check_out_date)")
+   List<Reservation> findAllByAvailablePeriod(int roomId, Date cin, Date cout);
 
 }

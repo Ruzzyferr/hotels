@@ -53,10 +53,11 @@ public class ReservationService {
 
     @Transactional
     public ReservationDTO save(@NotNull ReservationSaveDTO dto) {
-        Reservation reservation1 = reservationRepository.findByRoom(dto.getRoom());
+        List<Reservation> list = reservationRepository.findAllByAvailablePeriod(dto.getRoom().getId(), dto.getCheckInDate(), dto.getCheckOutDate());
 
-        if(dto.getCheckInDate().after(reservation1.getCheckInDate()) && dto.getCheckOutDate().before(reservation1.getCheckOutDate())){
-            throw (new GenericServiceException(ErrorType.NO_ACTIVE_ROOM_IN_SELECTED_DATES,"check in date can be min " + reservation1.getCheckOutDate()));
+
+        if(!list.isEmpty()){
+            throw new GenericServiceException(ErrorType.NO_ACTIVE_ROOM_IN_SELECTED_DATES,"check in date can be min " + dto.getCheckOutDate());
         }
 
         Reservation reservation = reservationMapper.toEntityFromSaveRequestDTO(dto);
