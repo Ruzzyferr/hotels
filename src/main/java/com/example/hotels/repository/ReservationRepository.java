@@ -23,7 +23,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     List<Reservation> findAllByCheckInDateBetween(Date checkInDate, Date checkInDate2);
 
-   Reservation findByRoom(RoomDTO room);
+   boolean existsByRoom_IdAndCheckInDateBetween(int id, Date checkInDate, Date checkOutDate);
 
    @Query(nativeQuery = true,
            value = "select * from reservations r\n" +

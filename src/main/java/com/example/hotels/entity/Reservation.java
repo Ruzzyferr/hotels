@@ -35,7 +35,7 @@ public class Reservation {
     @ManyToOne
     private Room room;
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     private Set<Customer> customer;
 
 }
