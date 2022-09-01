@@ -5,9 +5,11 @@ import com.example.hotels.dto.RoomSaveRequestDTO;
 import com.example.hotels.entity.Room;
 import com.example.hotels.mapper.RoomMapper;
 import com.example.hotels.repository.RoomRepository;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 
 @Service
+@FeignClient(value = "hotels-mail", url = "http://localhost:8085")
 public class RoomService {
 
     private final RoomMapper roomMapper;

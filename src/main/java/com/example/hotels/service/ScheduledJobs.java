@@ -39,7 +39,11 @@ public class ScheduledJobs {
                 System.out.println("Sayın"+ customer.getName() + "Check in tarihinize 1 gün kalmıştır");
             }else if (today.toDate() == checkInDate.toDate()){
                 System.out.println("Sayın"+ customer.getName() + "Check in tarihiniz bugündür");
-            }};
+            }else{
+                System.out.println("");
+            }
+
+            };
 
 
             ;
