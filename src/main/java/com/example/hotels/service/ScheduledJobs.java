@@ -1,5 +1,7 @@
 package com.example.hotels.service;
 
+import com.example.hotels.client.MailClient;
+import com.example.hotels.dto.MailDTO;
 import com.example.hotels.entity.Customer;
 import com.example.hotels.entity.Reservation;
 import com.example.hotels.repository.ReservationRepository;
@@ -17,6 +19,7 @@ import java.util.Set;
 public class ScheduledJobs {
 
     private final ReservationRepository reservationRepository;
+    private final MailClient mailClient;
 
     @Scheduled(cron = "0 * * * * *")
     public void ScheduledMail(){
@@ -30,27 +33,24 @@ public class ScheduledJobs {
         for(Reservation reservation : sendAnEmail ){
             Set<Customer> set = reservation.getCustomer();
             Date checkIn = reservation.getCheckInDate();
-            DateTime checkInDate = new DateTime(checkIn);
-            for( Customer customer : set){if (today.plusDays(3).toDate() == checkInDate.toDate()){
-                System.out.println("Sayın"+ customer.getName() + "Check in tarihinize 3 gün kalmıştır");
-            }else if (today.plusDays(2).toDate() == checkInDate.toDate()){
-                System.out.println("Sayın"+ customer.getName() + "Check in tarihinize 2 gün kalmıştır");
-            }else if (today.plusDays(1).toDate() == checkInDate.toDate()){
-                System.out.println("Sayın"+ customer.getName() + "Check in tarihinize 1 gün kalmıştır");
-            }else if (today.toDate() == checkInDate.toDate()){
-                System.out.println("Sayın"+ customer.getName() + "Check in tarihiniz bugündür");
-            }else{
-                System.out.println("");
+            for( Customer customer : set) {
+                String message = "Sayın " + customer.getName() + " check in tarihinize " + calculateRemainingDayCount(checkIn) + " gün(ler) kalmıştır.";
+                MailDTO mailDTO = MailDTO.builder()
+                        .to(customer.getEmail())
+                        .subject("Check-In Tarihiniz yaklaşıyor")
+                        .context(message)
+                        .build();
+                mailClient.sendMail(mailDTO);
             }
-
-            };
-
-
-            ;
-
         }
 
 
+    }
+
+    private int calculateRemainingDayCount(Date checkIn) {
+        Date today = new Date();
+        long diff = checkIn.getTime() - today.getTime();
+        return (int) (diff / (1000*60*60*24));
     }
 
 
