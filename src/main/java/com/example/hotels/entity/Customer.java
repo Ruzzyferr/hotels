@@ -1,4 +1,5 @@
 package com.example.hotels.entity;
+import com.example.hotels.enums.Blacklist;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,5 +26,8 @@ public class Customer {
     private String email;
 
     private Boolean active;
+
+    @Enumerated(EnumType.STRING)
+    private Blacklist blacklist;
 
 }

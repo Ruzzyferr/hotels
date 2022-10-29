@@ -15,4 +15,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     Optional<Customer> findByIdAndActiveTrue(int id);
 
     boolean existsByIdAndActiveTrue(int id);
+
+    List<Customer> findAllByBlacklistBlacklist();
 }

@@ -19,4 +19,6 @@ public class CustomerDTO {
 
     private Boolean active;
 
+    private String Blacklist;
+
 }

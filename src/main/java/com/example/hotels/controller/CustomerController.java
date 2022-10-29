@@ -36,6 +36,11 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.listAllCustomers(), HttpStatus.OK);
     }
 
+    @GetMapping("/list/all/blacklist")
+    public ResponseEntity<List<CustomerDTO>> listAllCustomersInBlacklist() {
+        return new ResponseEntity<>(customerService.listAllBlacklistCustomers(), HttpStatus.OK);
+    }
+
 
 
 }

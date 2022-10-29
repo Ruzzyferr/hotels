@@ -52,4 +52,9 @@ public class CustomerService {
         return customerMapper.toDtoList(customerRepository.findAllByActiveTrue());
     }
 
+    public List<CustomerDTO> listAllBlacklistCustomers() {
+        return customerMapper.toDtoList(customerRepository.findAllByBlacklistBlacklist());
+    }
+
+
 }
