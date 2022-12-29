@@ -3,7 +3,6 @@ package com.example.hotels.service;
 import com.example.hotels.dto.*;
 import com.example.hotels.entity.Customer;
 import com.example.hotels.entity.Reservation;
-import com.example.hotels.entity.Room;
 import com.example.hotels.enums.ErrorType;
 import com.example.hotels.enums.ReservationStatus;
 import com.example.hotels.exception.GenericServiceException;
@@ -53,6 +52,13 @@ public class ReservationService {
 
     @Transactional
     public ReservationDTO save(@NotNull ReservationSaveDTO dto) {
+
+        Optional<Customer> BlackCustomer = customerRepository.findByIdAndBlacklistBlacklist();
+
+        if (BlackCustomer != null){
+            throw new GenericServiceException(ErrorType.SELECTED_CUSTOMER_IS_IN_BLACKLIST,"Customers in Blacklist can not do that");
+        }
+
         List<Reservation> list = reservationRepository.findAllByAvailablePeriod(dto.getRoom().getId(), dto.getCheckInDate(), dto.getCheckOutDate());
 
 
